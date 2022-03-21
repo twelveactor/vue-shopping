@@ -59,14 +59,14 @@ import Login_back from '@/components/login/childCompts/Login_back'
 export default {
   name: 'Login',
   components: {
-    Login_back,
+    Login_back
   },
   data() {
     return {
       LoginForm: {
         // 表单数据绑定内容
-        username: '',
-        password: '',
+        username: 'admin',
+        password: '123456',
       },
       // Form 组件提供了表单验证的功能，只需要通过 rules 属性传入约定的验证规则，并将 Form-Item 的 prop 属性设置为需校验的字段名即可
       rules: {
@@ -133,8 +133,8 @@ export default {
         this.$router.push("/home")
 
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -142,7 +142,7 @@ export default {
 // 组件盒子
 .login_container {
   // center是距离页面左边的定位，0px是距离页面上面的定位
-  background: url('~assets/img/login/1-160929120Q1.jpg') no-repeat center 0;
+  background: url('~assets/img/login/Back_b.jpg') no-repeat center/100% 0;
   //min-height: 100vh;
   height: 100%;
   //把背景图像扩展至足够大，以使背景图像完全覆盖背景区域。背景图像的某些部分也许无法显示在背景定位区域中；
