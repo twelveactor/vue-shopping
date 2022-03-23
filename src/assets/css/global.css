@@ -10,3 +10,14 @@ body,
 .el-breadcrumb {
     margin-bottom: 10px;
 }
+
+.el-table {
+    margin-top: 20px;
+    font-size: 12px !important;
+    text-align: center !important;
+}
+
+.el-pagination {
+    margin-top: 20px;
+    text-align: center;
+}

@@ -17,7 +17,14 @@ import {
   Card,
   Option,
   Col,
-  Row
+  Row,
+  Table,
+  TableColumn,
+  Switch,
+  Tooltip,
+  Pagination,
+  Dialog,
+  Select
 } from 'element-ui'
 
 // 注册为全局可用的组件
@@ -38,4 +45,11 @@ Vue.use(Card)
 Vue.use(Option)
 Vue.use(Col)
 Vue.use(Row)
+Vue.use(Table)
+Vue.use(TableColumn)
+Vue.use(Switch)
+Vue.use(Tooltip)
+Vue.use(Pagination)
+Vue.use(Dialog)
+Vue.use(Select)
 Vue.prototype.$message = Message

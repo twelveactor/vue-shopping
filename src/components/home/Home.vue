@@ -93,7 +93,7 @@ export default {
   methods: {
     // 退出
     btnHomeOut() {
-      window.sessionStorage.removeItem('token')
+      window.sessionStorage.clear()
       // 清除之后要重定向一下页面,因为重定向之后会检查token，没有需要重新登录
       this.$router.push('/')
     },
