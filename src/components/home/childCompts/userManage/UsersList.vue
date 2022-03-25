@@ -68,13 +68,15 @@
               <el-button type="primary"
                          icon="el-icon-edit"
                          circle size="small"
-                         @click="DialogEditUser = true"></el-button>
+                         @click="showDialogEditUser(scope.row.id)"></el-button>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" content="修改权限" placement="top" :enterable="false">
-              <el-button type="warning" icon="el-icon-setting" circle size="small"></el-button>
+              <el-button type="warning" icon="el-icon-setting" circle size="small"
+                         @click="roleButton(scope.row)"></el-button>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" content="删除" placement="top" :enterable="false">
-              <el-button type="danger" icon="el-icon-delete" circle size="small"></el-button>
+              <el-button type="danger" icon="el-icon-delete" circle size="small"
+                         @click="deleteUserById(scope.row.id)"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -90,8 +92,9 @@
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
-      
+
     </el-card>
+
 
     <!--添加用户的对话框-->
     <!--需要设置visible属性，它接收Boolean，当为true时显示 Dialog。-->
@@ -131,7 +134,6 @@
     <el-button type="primary" @click="addUser()">确 定</el-button>
       </span>
     </el-dialog>
-
     <!--编辑按钮-->
     <el-dialog
       title="编辑用户"
@@ -157,10 +159,37 @@
 
       <span slot="footer" class="dialog-footer">
         <el-button @click="DialogEditUser = false">取 消</el-button>
-        <el-button type="primary" @click="setEditClose">确 定</el-button>
+        <el-button type="primary" @click="setEditUserInfo">确 定</el-button>
       </span>
     </el-dialog>
+    <!--分配权限按钮-->
+    <el-dialog
+      title="分配权限"
+      :visible.sync="DialogRoleVisible"
+      width="50%"
+      @close="RoleCloseBtn"
+    >
+      <!--内容主体区-->
+      <div>
+        <p>角色名称：{{ userInfo.username }}</p>
+        <p>角色权限：{{ userInfo.role_name }}</p>
+        <p>分配权限：
+          <el-select v-model="selectRoleId" placeholder="请选择">
+            <el-option
+              v-for="item in roleUserList"
+              :key="item.id"
+              :label="item.roleName"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </p>
+      </div>
 
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="DialogRoleVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveRoleBtn">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -181,13 +210,18 @@ export default {
       total: 0,
       // 添加用户出现一个对话框
       addDialogVisible: false,
+      // 编辑用户对话框
       DialogEditUser: false,
+      // 分配全选对话框
+      DialogRoleVisible: false,
       // 编辑用户对话框弹窗的表单对象
       editUser: {
+        id: 0,
         username: '',
         mobile: '',
         email: ''
       },
+      // editForm: {},
       // 添加用户弹窗的表单对象
       addForm: {
         username: '',
@@ -195,6 +229,12 @@ export default {
         mobile: '',
         email: ''
       },
+      // 权限弹窗数据
+      userInfo: {},
+      // 所有角色的数据列表
+      roleUserList: [],
+      // 当权选中的角色权限Id值
+      selectRoleId: '',
       // 表单验证规则
       addFormRules: {
         username: [
@@ -331,8 +371,94 @@ export default {
     // EditChildren(EditUser) {
     //   console.log(EditUser)
     // }
-    setEditClose() {
-      console.log(this.editUser)
+    // 点击修改按钮 获取 一下当前修改对象的id
+    showDialogEditUser(id) {
+      //   显示对话框
+      this.DialogEditUser = true
+      this.editUser.id = id
+    },
+    // 修改用户信息
+    setEditUserInfo() {
+      this.$refs.EditDialog.validate(async valid => {
+        // 判断是否合法
+        if (!valid) {
+          return this.$message.error('请把内容填写完整')
+        }
+        console.log(this.editUser)
+        await this.$http.put('users/' + this.editUser.id, {
+          username: this.editUser.username,
+          mobile: this.editUser.mobile,
+          email: this.editUser.email
+        }).then(res => {
+          const result = res.data
+          if (result.meta.status !== 200) {
+            return this.$message.error(result.meta.msg)
+          }
+          // console.log(result)
+          this.$message.success('用户修改成功')
+          this.DialogEditUser = false  // 用户添加成功就把弹窗关闭
+          // 重新获取用户列表
+          this.getUserList()
+        })
+      })
+    },
+    // 删除用户
+    async deleteUserById(id) {
+      await this.$confirm('此操作将永久删除该用户, 是否继续?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$http.delete('users/' + id).then(res => {
+          const result = res.data
+          if (result.meta.status !== 200) {
+            return this.$message.error(result.meta.msg)
+          }
+          this.$message.success(result.meta.msg)
+          // 刷新获取用户
+          this.getUserList()
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+    },
+    // 权限按钮弹框
+    async roleButton(row) {
+      this.userInfo = row
+      // 拉取用户数据
+      await this.$http.get('roles').then(result => {
+        const {data: res} = result
+        if (res.meta.status !== 200) {
+          return this.$message.error(res.meta.msg)
+        }
+        this.roleUserList = res.data
+      })
+      console.log(this.roleUserList)
+      this.DialogRoleVisible = true
+    },
+    // 权限分配确认按钮
+    async saveRoleBtn() {
+      if (!this.selectRoleId) {
+        return this.$message.error('请选择要分配的角色')
+      }
+      await this.$http.put(`users/${this.userInfo.id}/role`, {rid: this.selectRoleId}).then(result => {
+        const {data: res} = result
+        if (res.meta.status !== 200) {
+          return this.$message.error(res.meta.msg)
+        }
+        // console.log(res)
+        this.$message.success('更新权限成功')
+        this.DialogRoleVisible = false
+        this.getUserList()
+      })
+    },
+    // 分配角色对话框关闭清除数据
+    RoleCloseBtn() {
+      this.selectRoleId = ''
+      this.userInfo = {}
     }
   }
 }

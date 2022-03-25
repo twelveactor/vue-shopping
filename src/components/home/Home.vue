@@ -15,7 +15,7 @@
     <!--内容主题区域-->
     <el-container>
       <!--侧边栏-->
-      <el-aside :width="isCollapse ?64+'px' : 200+'px'">
+      <el-aside :width="isCollapse ? 64+'px' : 200+'px'">
         <!--控制侧边栏缩放-->
         <div class="toggle-button" @click="toggleCollapse">|||</div>
         <!--侧边栏菜单-->
@@ -120,7 +120,7 @@ export default {
 
 <style lang="less" scoped>
 .home_container {
-  width: 100%;
+  //width: 100%;
   height: 100%;
 }
 
@@ -128,6 +128,7 @@ export default {
   height: 150px !important;
   display: flex;
   background: url("~assets/img/home/B.gif") no-repeat center 0px;
+  overflow: hidden;
   background-size: cover;
   justify-content: space-between;
   align-items: center;
@@ -162,7 +163,14 @@ export default {
 
 .el-aside {
   background-color: #545c64;
+  //height: calc(100vh - 150px); //61px为顶部header盒子高度
+  //overflow-y: auto;
   //width: 200px !important;
+  //display: block;
+  ////position: absolute;
+  ////left: 0;
+  ////top: 60px;
+  ////bottom: 0;
 
   .el-menu {
     // 取消菜单项展开的多余的边框线
@@ -187,6 +195,9 @@ export default {
 
 .el-main {
   background-color: #f6f6f6;
+  //line-height: 150px;
+  height: 84.5vh;
+  //overflow-y: auto;
 }
 
 </style>

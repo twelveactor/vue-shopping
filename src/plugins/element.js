@@ -24,7 +24,12 @@ import {
   Tooltip,
   Pagination,
   Dialog,
-  Select
+  Select,
+  MessageBox,
+  Tag,
+  Tree,
+  TimeSelect,
+  OptionGroup
 } from 'element-ui'
 
 // 注册为全局可用的组件
@@ -52,4 +57,9 @@ Vue.use(Tooltip)
 Vue.use(Pagination)
 Vue.use(Dialog)
 Vue.use(Select)
+Vue.use(Tag)
+Vue.use(Tree)
+Vue.use(TimeSelect)
+Vue.use(OptionGroup)
 Vue.prototype.$message = Message
+Vue.prototype.$confirm = MessageBox.confirm
