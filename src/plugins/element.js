@@ -29,7 +29,11 @@ import {
   Tag,
   Tree,
   TimeSelect,
-  OptionGroup
+  OptionGroup,
+  Cascader,
+  Alert,
+  Tabs,
+  TabPane
 } from 'element-ui'
 
 // 注册为全局可用的组件
@@ -61,5 +65,9 @@ Vue.use(Tag)
 Vue.use(Tree)
 Vue.use(TimeSelect)
 Vue.use(OptionGroup)
+Vue.use(Cascader)
+Vue.use(Alert)
+Vue.use(Tabs)
+Vue.use(TabPane)
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

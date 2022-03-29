@@ -6,6 +6,8 @@ import VueParticles from 'vue-particles'
 import axios from "axios";
 import 'default-passive-events'
 import moment from 'moment'
+import TreeTable from 'vue-table-with-tree-grid'
+
 
 // 配置网络请求根路径
 axios.defaults.baseURL = "http://127.0.0.1:8888/api/private/v1/"
@@ -30,6 +32,8 @@ axios.interceptors.response.use(res => {
 Vue.prototype.$http = axios
 // 把格式化时间moment插件加入原型链
 Vue.prototype.$moment = moment
+// 手动全局注册vue-table-with-tree-grid
+Vue.component('tree-table', TreeTable)
 
 Vue.config.productionTip = false
 

@@ -141,7 +141,7 @@ export default {
 // 组件盒子
 .login_container {
   // center是距离页面左边的定位，0px是距离页面上面的定位
-  background: url('~assets/img/login/login_back2.jpg') no-repeat center/100% 0;
+  background: url('~assets/img/login/1-160929120Q1.jpg') no-repeat center/100% 0;
   //min-height: 100vh;
   height: 100%;
   //把背景图像扩展至足够大，以使背景图像完全覆盖背景区域。背景图像的某些部分也许无法显示在背景定位区域中；
