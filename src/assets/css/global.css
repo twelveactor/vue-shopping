@@ -22,3 +22,12 @@ body,
     margin-top: 20px;
     text-align: center;
 }
+
+.el-step__title {
+    font-size: 14px !important;
+}
+
+/* 富文本编辑框 */
+.ql-editor {
+    height: 400px !important;
+}

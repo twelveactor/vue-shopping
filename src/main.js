@@ -7,7 +7,12 @@ import axios from "axios";
 import 'default-passive-events'
 import moment from 'moment'
 import TreeTable from 'vue-table-with-tree-grid'
-
+// 导入富文本编辑器
+import VueQuillEditor from 'vue-quill-editor'
+// 导入富文本样式
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 
 // 配置网络请求根路径
 axios.defaults.baseURL = "http://127.0.0.1:8888/api/private/v1/"
@@ -39,6 +44,7 @@ Vue.config.productionTip = false
 
 // 安装login登录界面动态背景插件
 Vue.use(VueParticles)
+Vue.use(VueQuillEditor)
 
 
 new Vue({

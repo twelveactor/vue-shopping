@@ -9,6 +9,7 @@ const UsersList = () => import('@/components/home/childCompts/userManage/UsersLi
 const RoleList = () => import('@/components/home/childCompts/powerManage/RoleList')
 const PowerList = () => import('@/components/home/childCompts/powerManage/PowerList')
 const GoodsList = () => import('@/components/home/childCompts/goodsManage/GoodsList')
+const GoodsAdd = () => import('@/components/home/childCompts/goodsManage/GoodsListInfo/GoodsAdd')
 const ClassifyParament = () => import('@/components/home/childCompts/goodsManage/ClassifyParament')
 const GoodsClassify = () => import('@/components/home/childCompts/goodsManage/GoodsClassify')
 const indentList = () => import('@/components/home/childCompts/indentManage/IndentList')
@@ -34,6 +35,7 @@ const routes = [
       {path: '/categories', component: GoodsClassify},
       {path: '/orders', component: indentList},
       {path: '/reports', component: DataReport},
+      {path: '/goods/add', component: GoodsAdd},
     ]
   }
 ]
