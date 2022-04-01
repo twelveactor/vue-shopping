@@ -14,12 +14,19 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
+//导入进度条插件
+import NProgress from 'nprogress'
+//导入进度条样式
+import 'nprogress/nprogress.css'
+
 // 配置网络请求根路径
 axios.defaults.baseURL = "http://127.0.0.1:8888/api/private/v1/"
 // 请求拦截
 axios.interceptors.request.use(config => {
   // console.log(config) // 打印的config中并没有
   // 在请求拦截中授权限，为请求头对象，添加token验证的Authorization( 授权 )字段
+  // 显示进度条
+  NProgress.start();
   config.headers.Authorization = window.sessionStorage.getItem('token')
   return config
 }, error => {
@@ -27,6 +34,8 @@ axios.interceptors.request.use(config => {
 })
 // 响应拦截
 axios.interceptors.response.use(res => {
+  // 隐藏进度条
+  NProgress.done();
   // 返回响应的数据
   return res
 }, error => {

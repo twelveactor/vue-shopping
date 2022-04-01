@@ -64,8 +64,8 @@ export default {
     return {
       LoginForm: {
         // 表单数据绑定内容
-        username: 'admin',
-        password: '123456',
+        username: '',
+        password: '',
       },
       // Form 组件提供了表单验证的功能，只需要通过 rules 属性传入约定的验证规则，并将 Form-Item 的 prop 属性设置为需校验的字段名即可
       rules: {
